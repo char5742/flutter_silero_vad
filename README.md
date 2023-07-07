@@ -13,3 +13,6 @@ For help getting started with Flutter development, view the
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
 
+## License
+This project uses the following open-source packages:
+- [silero-vad]([link to the library](https://github.com/snakers4/silero-vad)https://github.com/snakers4/silero-vad) which is licensed under the [MIT License](https://github.com/snakers4/silero-vad/blob/master/LICENSE).
