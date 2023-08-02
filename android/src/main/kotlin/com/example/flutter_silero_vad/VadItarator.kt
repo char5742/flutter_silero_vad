@@ -4,7 +4,7 @@ import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 
-import    java.nio.FloatBuffer
+import java.nio.FloatBuffer
 import java.nio.LongBuffer
 import java.util.Collections
 
@@ -81,8 +81,7 @@ class VadIterator constructor(
         val inputOrt =
             OnnxTensor.createTensor(env, FloatBuffer.wrap(data), longArrayOf(1, windowSizeSamples));
         val srOrt = OnnxTensor.createTensor(
-            env,
-            longArrayOf(sampleRate)
+            env, sampleRate
         );
         val hOrt = OnnxTensor.createTensor(env, hidden);
         val cOrt = OnnxTensor.createTensor(env, cell);

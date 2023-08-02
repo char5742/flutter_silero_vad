@@ -4,7 +4,7 @@ import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
 
-import    java.nio.FloatBuffer
+import java.nio.FloatBuffer
 import java.nio.LongBuffer
 import java.util.Collections
 
@@ -81,8 +81,7 @@ class VadIterator constructor(
         val inputOrt =
             OnnxTensor.createTensor(env, FloatBuffer.wrap(data), longArrayOf(1, windowSizeSamples));
         val srOrt = OnnxTensor.createTensor(
-            env,
-            longArrayOf(sampleRate)
+            env, sampleRate
         );
         val hOrt = OnnxTensor.createTensor(env, hidden);
         val cOrt = OnnxTensor.createTensor(env, cell);
@@ -94,9 +93,8 @@ class VadIterator constructor(
                 "c" to cOrt,
             )
         );
-        val output =
-            (outputOrt[0].value as Array<FloatArray>
-                ?: throw Exception("Unexpected output type"))[0][0];
+        val output = (outputOrt[0].value as Array<FloatArray>
+            ?: throw Exception("Unexpected output type"))[0][0];
         hidden = outputOrt[1].value as Array<Array<FloatArray>>;
         cell = outputOrt[2].value as Array<Array<FloatArray>>;
 
