@@ -47,5 +47,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Used to capture audio for audio stream plugin</string>
+	<key>UISupportsDocumentBrowser</key>
+	<true/>
 </dict>
 </plist>
