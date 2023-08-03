@@ -8,7 +8,7 @@ class WaveformPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    if(audioData.isEmpty) return;
+    if (audioData.isEmpty) return;
     final paint = Paint()
       ..color = color
       ..strokeWidth = 2.0
@@ -45,13 +45,14 @@ class Waveform extends StatelessWidget {
   final List<int> audioData;
   final Color color;
 
-  const Waveform({super.key, required this.audioData, this.color = Colors.blue});
+  const Waveform(
+      {super.key, required this.audioData, this.color = Colors.blue});
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
       painter: WaveformPainter(audioData: audioData, color: color),
-      size: const Size(500, 500),
+      size: const Size(1000, 500),
     );
   }
 }

@@ -40,7 +40,7 @@ class HomePage extends HookConsumerWidget {
               await ref.read(audioServiceProvider).play();
               ref.read(recoderProvider).vad.resetState();
             },
-            child: Text("Start"),
+            child: const Text("Start"),
           )
         ],
       ),
