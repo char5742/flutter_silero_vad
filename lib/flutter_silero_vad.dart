@@ -4,14 +4,14 @@ import 'flutter_silero_vad_platform_interface.dart';
 
 class FlutterSileroVad {
   Future<String?> initialize(
-      {required Uint8List modelBytes,
+      {required String modelPath,
       required int sampleRate,
       required int frameSize,
       required double threshold,
       required int minSilenceDurationMs,
       required int speechPadMs}) {
     return FlutterSileroVadPlatform.instance.initialize(
-      modelBytes: modelBytes,
+      modelPath: modelPath,
       sampleRate: sampleRate,
       frameSize: frameSize,
       threshold: threshold,

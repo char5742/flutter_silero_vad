@@ -24,7 +24,7 @@ class FlutterSileroVadPlugin : FlutterPlugin, MethodCallHandler {
         when (call.method) {
             "initialize" -> {
                 vad = VadIterator(
-                    call.argument<ByteArray>("modelBytes")!!,
+                    call.argument<String>("modelPath")!!,
                     call.argument<Long>("sampleRate")!!,
                     call.argument<Long>("frameSize")!!,
                     call.argument<Float>("threshold")!!,

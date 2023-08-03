@@ -11,7 +11,7 @@ class MethodChannelFlutterSileroVad extends FlutterSileroVadPlatform {
 
   @override
   Future<String?> initialize({
-    required Uint8List modelBytes,
+    required String modelPath,
     required int sampleRate,
     required int frameSize,
     required double threshold,
@@ -19,7 +19,7 @@ class MethodChannelFlutterSileroVad extends FlutterSileroVadPlatform {
     required int speechPadMs,
   }) async {
     final res = await methodChannel.invokeMethod<String>('initialize', {
-      'modelBytes': modelBytes,
+      'modelPath': modelPath,
       'sampleRate': sampleRate,
       'frameSize': frameSize,
       'threshold': threshold,

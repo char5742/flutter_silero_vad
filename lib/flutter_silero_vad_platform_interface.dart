@@ -26,7 +26,7 @@ abstract class FlutterSileroVadPlatform extends PlatformInterface {
   }
 
   Future<String?> initialize({
-    required Uint8List modelBytes,
+    required String modelPath,
     required int sampleRate,
     required int frameSize,
     required double threshold,

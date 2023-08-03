@@ -68,25 +68,24 @@ class RecorderService {
     assert(isInited);
 
     await recorder.startRecording();
-    final modelByteData = await rootBundle.load('assets/silero_vad.onnx');
+    await onnxModelToLocal();
     await vad.initialize(
-      modelBytes: modelByteData.buffer.asUint8List(),
+      modelPath: await modelPath,
       sampleRate: sampleRate,
       frameSize: frameSize,
       threshold: 0.7,
-      minSilenceDurationMs: 0,
+      minSilenceDurationMs: 100,
       speechPadMs: 0,
     );
     recordingDataSubscription = recorder.audioStream.listen((buffer) async {
       final data = _transformBuffer(buffer);
       if (data.isEmpty) return;
       frameBuffer.addAll(buffer);
-      if (frameBuffer.length >= frameSize * 2 * sampleRate ~/ 1000) {
+      while (frameBuffer.length >= frameSize * 2 * sampleRate ~/ 1000) {
         final b = frameBuffer.take(frameSize * 2 * sampleRate ~/ 1000).toList();
         frameBuffer.removeRange(0, frameSize * 2 * sampleRate ~/ 1000);
         await _handleProcessedAudio(b);
       }
-      // _handleProcessedAudio(buffer);
       controller.add(data);
     });
 
@@ -100,14 +99,12 @@ class RecorderService {
 
   Future<void> stopRecorder() async {
     await recorder.startRecording();
-    // vad.dispose();
     if (recordingDataSubscription != null) {
       await recordingDataSubscription?.cancel();
       recordingDataSubscription = null;
       await processedAudioSubscription?.cancel();
       processedAudioSubscription = null;
     }
-    // _mplaybackReady = true;
   }
 
   Int16List _transformBuffer(List<int> buffer) {
@@ -213,5 +210,13 @@ class RecorderService {
 
     final File wavFile = File(filePath);
     wavFile.writeAsBytesSync(wavHeader.buffer.asUint8List() + pcmBytes);
+  }
+
+  /// アセットからアプリケーションディレクトリにファイルをコピーする
+  Future<void> onnxModelToLocal() async {
+    final data = await rootBundle.load('assets/silero_vad.onnx');
+    final bytes =
+        data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+    File(await modelPath).writeAsBytesSync(bytes);
   }
 }

@@ -9,7 +9,7 @@ import java.nio.LongBuffer
 import java.util.Collections
 
 class VadIterator constructor(
-    modelBytes: ByteArray,
+    modelPath: String,
     sampleRate: Long,
     frameSize: Long,
     threshold: Float,
@@ -29,8 +29,6 @@ class VadIterator constructor(
 
     // model states
     private var triggerd: Boolean = false
-    private var speechStart: Long = 0
-    private var speechEnd: Long = 0
     private var tempEnd: Long = 0
     private var currentSample: Long = 0
 
@@ -49,26 +47,24 @@ class VadIterator constructor(
         this.hidden = Array(2) { Array(1) { FloatArray(64) } };
         this.cell = Array(2) { Array(1) { FloatArray(64) } };
 
-        initSession(modelBytes);
+        initSession(modelPath);
     }
 
     private lateinit var env: OrtEnvironment;
     private lateinit var session: OrtSession;
 
 
-    private fun initSession(modelBytes: ByteArray) {
+    private fun initSession(modelPath: String) {
         env = OrtEnvironment.getEnvironment();
         val sessionOptions = OrtSession.SessionOptions();
         sessionOptions.setIntraOpNumThreads(1);
         sessionOptions.setInterOpNumThreads(1);
         sessionOptions.setOptimizationLevel(OrtSession.SessionOptions.OptLevel.ALL_OPT);
-        session = env.createSession(modelBytes, sessionOptions);
+        session = env.createSession(modelPath, sessionOptions);
     }
 
     public fun resetState() {
         triggerd = false;
-        speechStart = 0;
-        speechEnd = 0;
         tempEnd = 0;
         currentSample = 0;
         hidden = Array(2) { Array(1) { FloatArray(64) } };
@@ -93,9 +89,8 @@ class VadIterator constructor(
                 "c" to cOrt,
             )
         );
-        val output =
-            (outputOrt[0].value as Array<FloatArray>
-                ?: throw Exception("Unexpected output type"))[0][0];
+        val output = (outputOrt[0].value as Array<FloatArray>
+            ?: throw Exception("Unexpected output type"))[0][0];
         hidden = outputOrt[1].value as Array<Array<FloatArray>>;
         cell = outputOrt[2].value as Array<Array<FloatArray>>;
 
@@ -107,7 +102,6 @@ class VadIterator constructor(
 
         if (output >= threshold && !triggerd) {
             triggerd = true
-            speechStart = currentSample - windowSizeSamples - speechPadSamples
         }
 
         if (output < (threshold - 0.15) && triggerd) {
@@ -117,8 +111,6 @@ class VadIterator constructor(
 
             if (currentSample - tempEnd >= minSilenceSamples) {
                 triggerd = false
-                speechEnd =
-                    if (tempEnd > 0.toLong()) tempEnd + speechPadSamples else currentSample + speechPadSamples
                 tempEnd = 0
             }
         }
