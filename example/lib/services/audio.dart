@@ -8,6 +8,7 @@ class AudioService {
         const AudioContext(
           android: AudioContextAndroid(
             audioMode: AndroidAudioMode.inCommunication,
+            usageType: AndroidUsageType.voiceCommunication,
           ),
         ),
       );
