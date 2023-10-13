@@ -8,12 +8,12 @@ PODS:
   - Flutter (1.0.0)
   - flutter_silero_vad (0.0.1):
     - Flutter
-    - onnxruntime-objc (= 1.15.0)
-  - onnxruntime-c (1.15.0)
-  - onnxruntime-objc (1.15.0):
-    - onnxruntime-objc/Core (= 1.15.0)
-  - onnxruntime-objc/Core (1.15.0):
-    - onnxruntime-c (= 1.15.0)
+    - onnxruntime-objc (= 1.14.0)
+  - onnxruntime-c (1.14.0)
+  - onnxruntime-objc (1.14.0):
+    - onnxruntime-objc/Core (= 1.14.0)
+  - onnxruntime-objc/Core (1.14.0):
+    - onnxruntime-c (= 1.14.0)
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
@@ -55,12 +55,12 @@ SPEC CHECKSUMS:
   audio_streamer: 474eec68329a86b19ea1dc3c9ccc5b02c166d688
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_silero_vad: c28b8b1145014d9138f78b64eae7c198609ed8aa
-  onnxruntime-c: e87399683ec19e3b812e13c6692882609a802b86
-  onnxruntime-objc: 57ae8f83779a4c32731065d50d02d042af581114
+  flutter_silero_vad: d645563ce45572b9f76e4edfe76a5b83f93bf8d7
+  onnxruntime-c: 1f5923e555122d12239a1173229d6c5e8a0afd3e
+  onnxruntime-objc: d4542b141e06b3ecb98b36f226ef47db0d9add36
   path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
   permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
 
 PODFILE CHECKSUM: 4090be87ef3353b7d49432b8f3a5c66e8cea7f68
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.13.0

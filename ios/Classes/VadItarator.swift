@@ -61,8 +61,8 @@ class VadIterator {
       elementType: .float,
       shape: inputShape)
     let srTensor = try ORTValue(
-      tensorData: NSMutableData(bytes: [sampleRate], length: MemoryLayout<Int64>.size),
-      elementType: .int64,
+      tensorData: NSMutableData(bytes: [sampleRate], length: MemoryLayout<Int32>.size),
+      elementType: .int32,
       shape: [1])
     let hTensor = try ORTValue(
       tensorData: NSMutableData(bytes: hidden.flatMap { $0.flatMap { $0 } }, length: hcSize * MemoryLayout<Float>.size),
