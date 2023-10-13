@@ -214,7 +214,8 @@ class RecorderService {
 
   /// アセットからアプリケーションディレクトリにファイルをコピーする
   Future<void> onnxModelToLocal() async {
-    final data = await rootBundle.load('assets/silero_vad_int32.onnx');
+    final data = await rootBundle
+        .load('assets/silero_vad${Platform.isAndroid ? '' : '_int32'}.onnx');
     final bytes =
         data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
     File(await modelPath).writeAsBytesSync(bytes);
