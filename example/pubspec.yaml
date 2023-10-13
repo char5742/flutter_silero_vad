@@ -20,6 +20,7 @@ dependencies:
   audio_streamer:
     git:
       url: https://github.com/char5742/audio_streamer.git
+      ref: 7eac47980f8e2825c9beafd5ffbdb746d27a8115
 
 dev_dependencies:
   flutter_lints: ^2.0.0
