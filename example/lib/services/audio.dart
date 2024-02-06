@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -10,6 +12,9 @@ class AudioService {
             audioMode: AndroidAudioMode.inCommunication,
             usageType: AndroidUsageType.voiceCommunication,
           ),
+          iOS: AudioContextIOS(
+            category: AVAudioSessionCategory.playAndRecord,
+          ),
         ),
       );
   }
@@ -17,7 +22,8 @@ class AudioService {
 
   Future<void> play() async {
     String outputPath = '${(await getTemporaryDirectory()).path}/output.wav';
-    await player.setSourceDeviceFile(outputPath);
-    await player.resume();
+    final wavFile = File(outputPath);
+    print(wavFile.statSync());
+    await player.play(DeviceFileSource(outputPath));
   }
 }
