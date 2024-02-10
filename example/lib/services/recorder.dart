@@ -31,7 +31,8 @@ class RecorderService {
 
   /// 発声が止まってから数秒後に音声データを保存するための変数
   DateTime? lastActiveTime;
-  final processedAudioStreamController = StreamController<List<int>>();
+  final processedAudioStreamController =
+      StreamController<List<int>>.broadcast();
   StreamSubscription<List<int>>? recordingDataSubscription;
   StreamSubscription<List<int>>? processedAudioSubscription;
 
