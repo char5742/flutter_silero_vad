@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -21,9 +19,8 @@ class AudioService {
   late AudioPlayer player;
 
   Future<void> play() async {
-    String outputPath = '${(await getTemporaryDirectory()).path}/output.wav';
-    final wavFile = File(outputPath);
-    print(wavFile.statSync());
+    final outputPath =
+        '${(await getApplicationDocumentsDirectory()).path}/output.wav';
     await player.play(DeviceFileSource(outputPath));
   }
 }

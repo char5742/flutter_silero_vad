@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
 class WaveformPainter extends CustomPainter {
+  WaveformPainter({required this.audioData, this.color = Colors.blue});
   final List<int> audioData;
   final Color color;
-
-  WaveformPainter({required this.audioData, this.color = Colors.blue});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -18,12 +17,12 @@ class WaveformPainter extends CustomPainter {
     final stepSize = audioData.length / size.width;
 
     for (var i = 0; i < size.width; ++i) {
-      final int sampleIndex = (i * stepSize).toInt();
-      final int sample = audioData[sampleIndex];
+      final sampleIndex = (i * stepSize).toInt();
+      final sample = audioData[sampleIndex];
 
       // Scale the vertical coordinate by the sample value.
-      final double normSample = sample / (1 << 16);
-      final double y = (1 - normSample) * size.height / 2;
+      final normSample = sample / (1 << 16);
+      final y = (1 - normSample) * size.height / 2;
 
       if (i == 0) {
         path.moveTo(i.toDouble(), y);
@@ -42,11 +41,13 @@ class WaveformPainter extends CustomPainter {
 }
 
 class Waveform extends StatelessWidget {
+  const Waveform({
+    super.key,
+    required this.audioData,
+    this.color = Colors.blue,
+  });
   final List<int> audioData;
   final Color color;
-
-  const Waveform(
-      {super.key, required this.audioData, this.color = Colors.blue});
 
   @override
   Widget build(BuildContext context) {

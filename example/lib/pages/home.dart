@@ -1,7 +1,7 @@
-import 'package:flutter_silero_vad_example/providers/audio.dart';
-import 'package:flutter_silero_vad_example/providers/recorder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_silero_vad_example/providers/audio.dart';
+import 'package:flutter_silero_vad_example/providers/recorder.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'components.dart';
@@ -20,17 +20,20 @@ class HomePage extends HookConsumerWidget {
         ref.read(recoderProvider).stopRecorder();
       }
     });
-    useEffect(() {
-      ref
-          .read(recoderProvider)
-          .init()
-          .then((value) => ref.read(recoderProvider).record(controller));
-      final subscription = controller.stream.listen((event) {
-        final buffer = event.toList();
-        spots.value = buffer;
-      });
-      return subscription.cancel;
-    }, []);
+    useEffect(
+      () {
+        ref
+            .read(recoderProvider)
+            .init()
+            .then((value) => ref.read(recoderProvider).record(controller));
+        final subscription = controller.stream.listen((event) {
+          final buffer = event.toList();
+          spots.value = buffer;
+        });
+        return subscription.cancel;
+      },
+      [],
+    );
     return Scaffold(
       body: Column(
         children: [
@@ -40,8 +43,8 @@ class HomePage extends HookConsumerWidget {
               await ref.read(audioServiceProvider).play();
               ref.read(recoderProvider).vad.resetState();
             },
-            child: const Text("Start"),
-          )
+            child: const Text('Start'),
+          ),
         ],
       ),
     );
