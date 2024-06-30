@@ -92,7 +92,8 @@ class RecorderService {
 
     processedAudioSubscription =
         processedAudioStreamController.stream.listen((buffer) async {
-      final outputPath = '${(await getTemporaryDirectory()).path}/output.wav';
+      final outputPath =
+          '${(await getApplicationDocumentsDirectory()).path}/output.wav';
       saveAsWav(buffer, outputPath);
       print('saved');
     });
