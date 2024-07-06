@@ -22,7 +22,7 @@ public class FlutterSileroVadPlugin: NSObject, FlutterPlugin {
                let minSilenceDurationMs = args["minSilenceDurationMs"] as? Int64,
                let speechPadMs = args["speechPadMs"] as? Int64
             {
-                vad = VadIterator(
+                vad = VadIteratorV5(
                     modelPath: modelPath, sampleRate: sampleRate, frameSize: frameSize,
                     threshold: Float(threshold), minSilenceDurationMs: minSilenceDurationMs,
                     speechPadMs: speechPadMs)
