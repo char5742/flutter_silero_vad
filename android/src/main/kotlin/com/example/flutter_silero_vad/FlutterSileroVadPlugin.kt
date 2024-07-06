@@ -1,9 +1,6 @@
 package com.example.flutter_silero_vad
 
 import androidx.annotation.NonNull
-
-import com.example.flutter_silero_vad.VadIterator
-
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
@@ -23,7 +20,7 @@ class FlutterSileroVadPlugin : FlutterPlugin, MethodCallHandler {
     override fun onMethodCall(@NonNull call: MethodCall, @NonNull result: Result) {
         when (call.method) {
             "initialize" -> {
-                vad = VadIterator(
+                vad = VadIteratorV5(
                     call.argument<String>("modelPath")!!,
                     call.argument<Long>("sampleRate")!!,
                     call.argument<Long>("frameSize")!!,

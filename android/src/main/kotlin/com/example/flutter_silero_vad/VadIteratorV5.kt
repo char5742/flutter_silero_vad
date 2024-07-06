@@ -3,24 +3,18 @@ package com.example.flutter_silero_vad
 import ai.onnxruntime.OnnxTensor
 import ai.onnxruntime.OrtEnvironment
 import ai.onnxruntime.OrtSession
-
 import java.nio.FloatBuffer
-import java.nio.LongBuffer
-import java.util.Collections
 
-class VadIterator constructor(
+class VadIteratorV5 constructor(
     modelPath: String,
-    sampleRate: Long,
+    // model config
+    private val sampleRate: Long,
     frameSize: Long,
-    threshold: Float,
+    private val threshold: Float,
     minSilenceDurationMs: Long,
     speechPadMs: Long
-) {
-    // model config
-
-    private val sampleRate: Long
+) : VadIterator {
     private val frameSize: Long
-    private val threshold: Float
     private val minSilenceSamples: Long
     private val speechPadSamples: Long
 
@@ -33,19 +27,15 @@ class VadIterator constructor(
     private var currentSample: Long = 0
 
     // model inputs
-    private var hidden: Array<Array<FloatArray>>
-    private var cell: Array<Array<FloatArray>>
+    private var state: Array<Array<FloatArray>>
 
     init {
-        this.threshold = threshold;
-        this.sampleRate = sampleRate;
         val srPerMs = sampleRate / 1000;
         this.frameSize = frameSize;
         this.minSilenceSamples = srPerMs * minSilenceDurationMs;
         this.speechPadSamples = srPerMs * speechPadMs;
         this.windowSizeSamples = frameSize * srPerMs;
-        this.hidden = Array(2) { Array(1) { FloatArray(64) } };
-        this.cell = Array(2) { Array(1) { FloatArray(64) } };
+        this.state = Array(2) { Array(1) { FloatArray(128) } }; // 64 -> 128
 
         initSession(modelPath);
     }
@@ -63,36 +53,32 @@ class VadIterator constructor(
         session = env.createSession(modelPath, sessionOptions);
     }
 
-    public fun resetState() {
+    override fun resetState() {
         triggerd = false;
         tempEnd = 0;
         currentSample = 0;
-        hidden = Array(2) { Array(1) { FloatArray(64) } };
-        cell = Array(2) { Array(1) { FloatArray(64) } };
+        state = Array(2) { Array(1) { FloatArray(128) } };
     }
 
 
-    public fun predict(data: FloatArray): Boolean {
-        var result = false;
+    override fun predict(data: FloatArray): Boolean {
         val inputOrt =
             OnnxTensor.createTensor(env, FloatBuffer.wrap(data), longArrayOf(1, windowSizeSamples));
         val srOrt = OnnxTensor.createTensor(
             env, sampleRate
         );
-        val hOrt = OnnxTensor.createTensor(env, hidden);
-        val cOrt = OnnxTensor.createTensor(env, cell);
+        val stateOrt = OnnxTensor.createTensor(env, state); // Change hOrt and cOrt to stateOrt
+
         val outputOrt = session.run(
             mapOf(
                 "input" to inputOrt,
                 "sr" to srOrt,
-                "h" to hOrt,
-                "c" to cOrt,
+                "state" to stateOrt, // Change h and c to state
             )
         );
         val output = (outputOrt[0].value as Array<FloatArray>
             ?: throw Exception("Unexpected output type"))[0][0];
-        hidden = outputOrt[1].value as Array<Array<FloatArray>>;
-        cell = outputOrt[2].value as Array<Array<FloatArray>>;
+        state = outputOrt[1].value as Array<Array<FloatArray>>; // Change hn and cn to state
 
         currentSample += windowSizeSamples;
 
