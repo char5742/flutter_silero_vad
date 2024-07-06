@@ -46,5 +46,9 @@ android {
 
     dependencies {
         implementation 'com.microsoft.onnxruntime:onnxruntime-android:1.13.1'
+        // Dependencies below are required only for development in the IDE.
+    //    implementation 'androidx.annotation:annotation:1.8.0'
+    //    implementation 'androidx.annotation:annotation-experimental:1.4.1'
+    //    implementation files('/opt/homebrew/Caskroom/flutter/3.0.5/flutter/bin/cache/artifacts/engine/android-arm64-release/flutter.jar')
     }
 }
