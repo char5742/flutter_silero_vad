@@ -5,8 +5,8 @@ class AudioService {
   AudioService() {
     player = AudioPlayer()
       ..setAudioContext(
-        const AudioContext(
-          android: AudioContextAndroid(
+        AudioContext(
+          android: const AudioContextAndroid(
             audioMode: AndroidAudioMode.inCommunication,
             usageType: AndroidUsageType.voiceCommunication,
           ),

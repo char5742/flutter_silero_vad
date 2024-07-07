@@ -41,7 +41,7 @@ class HomePage extends HookConsumerWidget {
           ElevatedButton(
             onPressed: () async {
               await ref.read(audioServiceProvider).play();
-              ref.read(recoderProvider).vad.resetState();
+              await ref.read(recoderProvider).vad.resetState();
             },
             child: const Text('Start'),
           ),

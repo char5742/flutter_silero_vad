@@ -14,7 +14,7 @@ class RecorderService {
   final recorder = AudioStreamer.instance;
   final vad = FlutterSileroVad();
   Future<String> get modelPath async =>
-      '${(await getApplicationSupportDirectory()).path}/silero_vad.onnx';
+      '${(await getApplicationSupportDirectory()).path}/silero_vad.v5.onnx';
   final sampleRate = 16000;
   final frameSize = 40; // 80ms
 
@@ -92,7 +92,8 @@ class RecorderService {
 
     processedAudioSubscription =
         processedAudioStreamController.stream.listen((buffer) async {
-      final outputPath = '${(await getTemporaryDirectory()).path}/output.wav';
+      final outputPath =
+          '${(await getApplicationDocumentsDirectory()).path}/output.wav';
       saveAsWav(buffer, outputPath);
       print('saved');
     });
@@ -221,7 +222,7 @@ class RecorderService {
 
   /// アセットからアプリケーションディレクトリにファイルをコピーする
   Future<void> onnxModelToLocal() async {
-    final data = await rootBundle.load('assets/silero_vad.onnx');
+    final data = await rootBundle.load('assets/silero_vad.v5.onnx');
     final bytes =
         data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
     File(await modelPath).writeAsBytesSync(bytes);

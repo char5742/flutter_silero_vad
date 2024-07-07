@@ -17,7 +17,7 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - permission_handler_apple (9.1.1):
+  - permission_handler_apple (9.3.0):
     - Flutter
 
 DEPENDENCIES:
@@ -51,16 +51,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/permission_handler_apple/ios"
 
 SPEC CHECKSUMS:
-  audio_session: 4f3e461722055d21515cf3261b64c973c062f345
+  audio_session: 088d2483ebd1dc43f51d253d4a1c517d9a2e7207
   audio_streamer: 474eec68329a86b19ea1dc3c9ccc5b02c166d688
   audioplayers_darwin: 877d9a4d06331c5c374595e46e16453ac7eafa40
-  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
-  flutter_silero_vad: c28b8b1145014d9138f78b64eae7c198609ed8aa
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  flutter_silero_vad: bcad5bcce50bd7f63b772ad3f46f9ce1995dd833
   onnxruntime-c: e87399683ec19e3b812e13c6692882609a802b86
   onnxruntime-objc: 57ae8f83779a4c32731065d50d02d042af581114
-  path_provider_foundation: 29f094ae23ebbca9d3d0cec13889cd9060c0e943
-  permission_handler_apple: e76247795d700c14ea09e3a2d8855d41ee80a2e6
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
+  permission_handler_apple: 9878588469a2b0d0fc1e048d9f43605f92e6cec2
 
-PODFILE CHECKSUM: 4090be87ef3353b7d49432b8f3a5c66e8cea7f68
+PODFILE CHECKSUM: 9e09393c0c54a0347a2bc0f0c09ff046ed28c1a0
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.15.2
