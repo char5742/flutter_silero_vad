@@ -10,7 +10,7 @@ dependencies:
   audio_streamer:
     git:
       url: https://github.com/char5742/audio_streamer.git
-      ref: 2033f816714d4d5e6f941d5c4a20763dbf638033
+      ref: 86efe28503b14bb26925a091439cb2a9a835fd1f
   audioplayers: ^6.0.0
   flutter:
     sdk: flutter
