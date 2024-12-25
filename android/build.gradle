@@ -25,6 +25,8 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
+    namespace "com.example.flutter_silero_vad"
+    
     compileSdkVersion 31
 
     compileOptions {
